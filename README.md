@@ -1,5 +1,7 @@
 # This project was created using `create-beth-app`
+
 ## To open an issue: https://github.com/ethanniser/the-beth-stack
+
 ## To discuss: https://discord.gg/Z3yUtMfkwa
 
 ### To run locally:
@@ -22,4 +24,4 @@
 
 3. Run `fly secrets set <NAME>=<VALUE>` (probably want to set `NODE_ENV` to `"production"`)
 
-5. Run `fly deploy`
+4. Run `fly deploy`
