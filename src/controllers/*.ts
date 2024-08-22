@@ -1,9 +1,13 @@
 import Elysia from "elysia";
 import { authController } from "./auth";
-import { tweetsController } from "./tweets";
+import { chatController } from "./chat";
+import { organizationsController } from "./organization";
+import { ticketController } from "./ticket";
 
 export const api = new Elysia({
   prefix: "/api",
 })
+  .use(chatController)
   .use(authController)
-  .use(tweetsController);
+  .use(organizationsController)
+  .use(ticketController);
