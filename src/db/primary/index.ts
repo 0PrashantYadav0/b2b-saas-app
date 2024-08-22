@@ -1,6 +1,6 @@
 import { createClient, type Config } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
-import { config } from "../config";
+import { config } from "../../config";
 import * as schema from "./schema";
 
 const { DATABASE_CONNECTION_TYPE } = config.env;
