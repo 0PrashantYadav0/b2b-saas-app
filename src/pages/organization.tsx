@@ -33,7 +33,7 @@ export const organization = new Elysia()
     const employees = await db.query.user.findMany({
       where: (user, { eq }) => eq(user.organization_id, orgId),
     });
-
+    console.log(employees)
     return html(() => (
       <BaseHtml>
         <Dashboard>

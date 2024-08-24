@@ -79,11 +79,11 @@ export const authController = new Elysia({
         if (existingUser) {
           return existingUser;
         }
-
+        console.log(googleUser)
         const user = await createUser({
           attributes: {
             name: googleUser.name,
-            email: googleUser.email ?? null,
+            email: googleUser.email || null,
             picture: googleUser.picture,
           },
         });

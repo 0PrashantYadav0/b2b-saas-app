@@ -5,6 +5,7 @@ import { dashboard } from "./dashboard";
 import { index } from "./index";
 import { newUser } from "./new-user";
 import { organization } from "./organization";
+import { settings } from "./settings";
 import { ticketsRoute } from "./tickets";
 
 export const pages = new Elysia()
@@ -14,4 +15,5 @@ export const pages = new Elysia()
   .use(organization)
   .use(authGroup)
   .use(newUser)
-  .use(dashboard);
+  .use(dashboard)
+  .use(settings);
