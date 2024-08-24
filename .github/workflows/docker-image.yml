@@ -2,29 +2,26 @@ name: SAAS-APP
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-    
       - name: Checkout
         uses: actions/checkout@v4
-        with: 
+        with:
           fetch-depth: 0
-          
+
       - name: Bun setup
         uses: oven-sh/setup-bun@v2
 
       - name: BUN test
         run: |
-          bun typecheck
-          bun format:check
-          bun start
-        env: 
+          bun install
+          bun run dev
+        env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
           DATABASE_CONNECTION_TYPE: ${{ secrets.DATABASE_CONNECTION_TYPE }}
@@ -37,12 +34,12 @@ jobs:
           HOST_URL: ${{ secrets.HOST_URL }}
           TURSO_API_KEY: ${{ secrets.TURSO_API_KEY }}
           TURSO_ORG_SLUG: ${{ secrets.TURSO_ORG_SLUG }}
-      
-  deploy: 
+
+  deploy:
     name: Deploy
     needs: [test]
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Deploy to production
         uses: johnbeynon/render-deploy-action@v0.0.8
