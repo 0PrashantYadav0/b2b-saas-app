@@ -34,7 +34,6 @@ jobs:
           HOST_URL: ${{ secrets.HOST_URL }}
           TURSO_API_KEY: ${{ secrets.TURSO_API_KEY }}
           TURSO_ORG_SLUG: ${{ secrets.TURSO_ORG_SLUG }}
-
   deploy:
     name: Deploy
     needs: [test]
