@@ -20,7 +20,7 @@ jobs:
       - name: BUN test
         run: |
           bun install
-          bun run dev
+          bun dev
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
