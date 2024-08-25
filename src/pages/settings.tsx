@@ -35,7 +35,7 @@ export const settings = new Elysia()
             <h1 class="text-3xl font-bold">Organization Settings</h1>
 
             <form
-              action="/settings/update-organization"
+              action="/api/update-organization"
               method="POST"
               class="space-y-6"
             >
@@ -59,40 +59,7 @@ export const settings = new Elysia()
               </button>
             </form>
           </main>
-          <h1>Under construction</h1>
         </Dashboard>
       </BaseHtml>
     ));
   })
-  // under construction
-  // .post("/settings/update-organization", async ({ db, session, body, set, headers }) => {
-  //   if (!session) {
-  //     redirect({ set, headers }, "/login");
-  //     return;
-  //   }
-
-  //   const orgId = session.user.organization_id;
-
-  //   if (!orgId) {
-  //     redirect({ set, headers }, "/new-user");
-  //     return;
-  //   }
-
-  //   const { organizationName } = await body();
-
-  //   if (!organizationName || typeof organizationName !== "string") {
-  //     redirect({ set, headers }, "/settings");
-  //     return;
-  //   }
-
-  //   // Update organization name in the database
-  //   await db.query.organizations.update({
-  //     where: (organizations, { eq }) => eq(organizations.id, orgId),
-  //     set: {
-  //       name: organizationName,
-  //     },
-  //   });
-
-  //   // Redirect back to settings page after update
-  //   redirect({ set, headers }, "/settings");
-  // });

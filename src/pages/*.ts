@@ -1,6 +1,7 @@
 import Elysia from "elysia";
 import { authGroup } from "./(auth)/*";
 import { orgId } from "./<organizationId>/*";
+import { customerRoute } from "./customer";
 import { dashboard } from "./dashboard";
 import { index } from "./index";
 import { newUser } from "./new-user";
@@ -16,4 +17,5 @@ export const pages = new Elysia()
   .use(authGroup)
   .use(newUser)
   .use(dashboard)
+  .use(customerRoute)
   .use(settings);

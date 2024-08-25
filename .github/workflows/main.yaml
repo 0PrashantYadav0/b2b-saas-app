@@ -19,6 +19,7 @@ jobs:
 
       - name: BUN test
         run: bun install
+        run: bun test
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
@@ -32,6 +33,40 @@ jobs:
           HOST_URL: ${{ secrets.HOST_URL }}
           TURSO_API_KEY: ${{ secrets.TURSO_API_KEY }}
           TURSO_ORG_SLUG: ${{ secrets.TURSO_ORG_SLUG }}
+
+  build:
+    name: Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: login to docker hub
+        id: docker-hub
+        env:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
+          DATABASE_CONNECTION_TYPE: ${{ secrets.DATABASE_CONNECTION_TYPE }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          CLIENT_ID_GITHUB: ${{ secrets.CLIENT_ID_GITHUB }}
+          CLIENT_SECRET_GITHUB: ${{ secrets.CLIENT_SECRET_GITHUB }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          HOST_URL: ${{ secrets.HOST_URL }}
+          TURSO_API_KEY: ${{ secrets.TURSO_API_KEY }}
+          TURSO_ORG_SLUG: ${{ secrets.TURSO_ORG_SLUG }}
+        run: |
+          docker login -u $username -p $password
+      - name: build the docker image
+        id: build-docker-image
+        run: |
+          ls -la 
+          docker build . -f Dockerfile -t ${{secrets.DOCKERHUB_USERNAME }}/saas-app:latest
+      - name: push the docker image
+        id: push-docker-image
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/saas-app:latest
+
   deploy:
     name: Deploy
     needs: [test]
