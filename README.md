@@ -1,8 +1,12 @@
 # B2B-SAAS-APP
 
-## Want to learn more about Bun, Elysia, turso and HTMX
+## [Link of Canvas of Project](https://app.eraser.io/workspace/wSaiPZPORvI7o7ZJjJRP?origin=share)
 
-- ### Visit the [BETH.md](./BETH.md)
+### Visit the [BETH.md](./BETH.md) to learn more about BETH Stack.
+
+### Visit the [Project Details](./PROJECT.md) to learn about Project.
+
+### Visit the [CI-CD](./CICD.md) to learn about CI/CD pipeline used in Project.
 
 ## About the Project:
 
