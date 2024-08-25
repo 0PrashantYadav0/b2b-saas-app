@@ -18,8 +18,9 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: BUN test
-        run: bun install
-        run: bun test
+        run: |
+          bun install
+          bun test
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           LOG_LEVEL: ${{ secrets.LOG_LEVEL }}
