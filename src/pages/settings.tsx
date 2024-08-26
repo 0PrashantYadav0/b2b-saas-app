@@ -3,6 +3,7 @@ import { BaseHtml } from "../components/base";
 import { ctx } from "../context";
 import { redirect } from "../lib";
 import { Dashboard } from "../components/dashboard";
+import { getTenantDb } from "../db/tenant";
 
 export const settings = new Elysia()
   .use(ctx)
@@ -31,23 +32,22 @@ export const settings = new Elysia()
     return html(() => (
       <BaseHtml>
         <Dashboard>
-          <main class="flex-1 space-y-6 py-6 my-8">
-            <h1 class="text-3xl font-bold">Organization Settings</h1>
-
+          <div class="py-8 px-10">
+            <h1 class="text-3xl font-semibold">Organization Settings</h1>
             <form
-              action="/api/update-organization"
+              action="/seettings"
               method="POST"
-              class="space-y-6"
+              class="py-8"
             >
               <div class="flex flex-col">
-                <label for="organizationName" class="text-lg font-medium">
+                <label for="organizationName" class="text-lg font-medium py-2">
                   Organization Name
                 </label>
                 <input
                   type="text"
                   id="organizationName"
                   name="organizationName"
-                  class="rounded border px-4 py-2"
+                  class="rounded border px-4 py-2 my-2"
                   value={organization.name}
                 />
               </div>
@@ -58,8 +58,44 @@ export const settings = new Elysia()
                 Save Changes
               </button>
             </form>
-          </main>
+          </div>
         </Dashboard>
       </BaseHtml>
     ));
+  })
+  .post("/settings", async ({ db, session, set, headers, html }) => {
+    if (!session) {
+      redirect({ set, headers }, "/login");
+      return;
+    }
+
+    const orgId = session.user.organization_id;
+
+    if (!orgId) {
+      redirect({ set, headers }, "/new-user");
+      return;
+    }
+
+    const organization = await db.query.organizations.findFirst({
+      where: (organizations, { eq }) => eq(organizations.id, orgId),
+    });
+
+    if (!organization) {
+      redirect({ set, headers }, "/new-user");
+      return;
+    }
+
+    const { tenantDb } = getTenantDb({
+      dbName: organization.database_name,
+      authToken: organization.database_auth_token,
+    });
+
+    if (!organization) {
+      redirect({ set, headers }, "/new-user");
+      return;
+    }
+    
+    // return (
+    //   <h1>hello</h1>
+    // )
   })
