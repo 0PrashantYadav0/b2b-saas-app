@@ -89,10 +89,18 @@ export const customerRoute = new Elysia()
 
     const totalTicketsLastWeek = closedTicketCountInLastWeek + openTicketCountInLastWeek ;
 
-    const customerSatisfactionRatioInLastWeek = (closedTicketCountInLastWeek/totalTicketsLastWeek)*100;
+    let customerSatisfactionRatioInLastWeek = (closedTicketCountInLastWeek/totalTicketsLastWeek)*100;
+
+    if(totalTicketsLastWeek === 0){
+      customerSatisfactionRatioInLastWeek = 0;
+    }
 
     const totalTickets = openTicketCount+closedTicketCount;
-    const overAllCustomerSatisfactionRatio = (closedTicketCount/totalTickets)*100;
+    let overAllCustomerSatisfactionRatio = (closedTicketCount/totalTickets)*100;
+
+    if(totalTickets === 0){
+      overAllCustomerSatisfactionRatio = 0;
+    }
     
     return html(() => (
       <>
