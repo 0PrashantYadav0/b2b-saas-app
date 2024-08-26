@@ -56,6 +56,7 @@
     "@t3-oss/env-core": "^0.6.1",
     "@tlscipher/holt": "1.1.0",
     "beth-stack": "0.0.33",
+    "drizzle": "^1.4.0",
     "drizzle-orm": "^0.33.0",
     "drizzle-typebox": "^0.1.1",
     "elysia": "0.7.4",
