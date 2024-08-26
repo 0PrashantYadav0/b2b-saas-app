@@ -70,13 +70,13 @@ export const dashboard = new Elysia()
           <main class="flex-1 space-y-4 py-5">
             <div class="relative flex items-center justify-between px-6 py-3">
               <div>
-                <h2 class="text-5xl" safe>
+                <h2 class="text-4xl font-semibold" safe>
                   Welcome, {session.user.name}
                 </h2>
                 <p class="text-xl">Here is the overview of your account:</p>
               </div>
 
-              <div class="pr-10 text-right text-5xl" safe>
+              <div class="pr-10 text-right text-4xl font-semibold capitalize" safe>
                 {organization.name}
               </div>
 
@@ -90,14 +90,14 @@ export const dashboard = new Elysia()
                 href="/tickets"
               />
               <Card
-                name="Tickets Closed Today"
+                name="Tickets Closed This Week"
                 value={closedTicketCountInLastWeek.toString()}
                 href="/tickets"
               />
               <Card
-                name="Customer Satisfaction This Week"
-                value={customerSatisfactionRatio.toString()+"%"}
-                href="/tickets"
+                name="Customer Satisfaction"
+                value={customerSatisfactionRatio.toPrecision(2)+"%"}
+                href="/customer"
               />
             </div>
           </main>
@@ -117,7 +117,7 @@ function Card({
 }) {
   return (
     <div class="relative rounded-md border p-5 ">
-      <h3 class="text-xl">{name}</h3>
+      <h3 class="text-xl py-2">{name}</h3>
       <p class="font-bold">{value}</p>
       <FancyLink text="View" href={href} />
     </div>
