@@ -63,7 +63,7 @@ export const dashboard = new Elysia()
 
     const openTicketCount = openTickets?.count ?? 0;
     const closedTicketCountInLastWeek = closedTicketsInLastWeek?.count ?? 0;
-    const customerSatisfactionRatio = (closedTicketCountInLastWeek/openTicketCount)*100;
+    const customerSatisfactionRatio = (closedTicketCountInLastWeek/(openTicketCount+closedTicketCountInLastWeek))*100;
     return html(() => (
       <BaseHtml>
         <Dashboard>
