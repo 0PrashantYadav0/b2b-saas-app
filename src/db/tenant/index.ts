@@ -55,7 +55,7 @@ export async function pushToTenantDb({
 
   return new Promise((resolve, reject) => {
     // Execute the command using child_process
-    const command = `npx drizzle-kit push --config=${tempConfigPath}`;
+    const command = `bunx drizzle-kit push --config=${tempConfigPath}`;
 
     const proc = exec(
       command,
