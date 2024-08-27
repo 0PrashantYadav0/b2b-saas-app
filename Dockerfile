@@ -3,6 +3,7 @@
 # Adjust BUN_VERSION as desired
 ARG BUN_VERSION=1.0.3
 FROM oven/bun:${BUN_VERSION} as base
+FROM node:16.6.1-alpine3.14
 
 # Bun app lives here
 WORKDIR /app
