@@ -1,11 +1,9 @@
-import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { FancyLink } from "../components";
 import { BaseHtml } from "../components/base";
 import { Dashboard } from "../components/dashboard";
 import { ctx } from "../context";
 import { getTenantDb } from "../db/tenant";
-import { tickets } from "../db/tenant/schema";
 import { redirect } from "../lib";
 
 export const dashboard = new Elysia()
@@ -37,32 +35,32 @@ export const dashboard = new Elysia()
       authToken: organization.database_auth_token,
     });
 
-    const [[openTickets], [closedTicketsInLastWeek]] = await tenantDb.batch([
-      tenantDb
-        .select({
-          count: sql<number>`count(*)`,
-        })
-        .from(tickets)
-        .where(eq(tickets.status, "open")),
-      tenantDb
-        .select({
-          count: sql<number>`count(*)`,
-        })
-        .from(tickets)
-        .where(
-          and(
-            eq(tickets.status, "closed"),
-            gt(
-              tickets.closed_at,
-              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-            ),
-            lt(tickets.closed_at, new Date(Date.now())),
-          ),
-        ),
-    ]);
+    // const [[openTickets], [closedTicketsInLastWeek]] = await tenantDb.batch([
+    //   tenantDb
+    //     .select({
+    //       count: sql<number>`count(*)`,
+    //     })
+    //     .from(tickets)
+    //     .where(eq(tickets.status, "open")),
+    //   tenantDb
+    //     .select({
+    //       count: sql<number>`count(*)`,
+    //     })
+    //     .from(tickets)
+    //     .where(
+    //       and(
+    //         eq(tickets.status, "closed"),
+    //         gt(
+    //           tickets.closed_at,
+    //           new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+    //         ),
+    //         lt(tickets.closed_at, new Date(Date.now())),
+    //       ),
+    //     ),
+    // ]);
 
-    const openTicketCount = openTickets?.count ?? 0;
-    const closedTicketCountInLastWeek = closedTicketsInLastWeek?.count ?? 0;
+    const openTicketCount =  0;
+    const closedTicketCountInLastWeek = 0;
     let customerSatisfactionRatio = 0;
     if(openTicketCount === 0 && closedTicketCountInLastWeek === 0){
       customerSatisfactionRatio = 0;
