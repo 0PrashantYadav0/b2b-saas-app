@@ -1,4 +1,5 @@
-import { unlinkSync } from "fs";
+import { exec } from "child_process";
+import { unlinkSync, writeFileSync } from "fs";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { config } from "../../config";
@@ -49,23 +50,28 @@ export async function pushToTenantDb({
     dialect: "sqlite",
   }`;
 
-  await Bun.write(tempConfigPath, configText);
+  // Write the configuration file
+  writeFileSync(tempConfigPath, configText);
 
   return new Promise((resolve, reject) => {
-    const proc = Bun.spawn(
-      ["bunx", "drizzle-kit", "push", `--config=${tempConfigPath}`],
-      {
-        stdout: input ? "inherit" : undefined,
-        stdin: input ? "inherit" : undefined,
-        onExit(subprocess, exitCode, signalCode, error) {
-          unlinkSync(tempConfigPath);
-          if (exitCode === 0) {
-            resolve(void 0);
-          } else {
-            console.error("Error pushing to tenant db");
-            reject(error);
+    // Execute the command using child_process
+    const command = `npx drizzle-kit push --config=${tempConfigPath}`;
+
+    const proc = exec(
+      command,
+      { stdio: input ? "inherit" : "pipe" },
+      (error, stdout, stderr) => {
+        unlinkSync(tempConfigPath); // Clean up config file
+
+        if (error) {
+          console.error("Error pushing to tenant db:", stderr);
+          reject(error);
+        } else {
+          if (input) {
+            console.log(stdout);
           }
-        },
+          resolve(void 0);
+        }
       },
     );
   });
