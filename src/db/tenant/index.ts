@@ -55,12 +55,12 @@ export async function pushToTenantDb({
 
   return new Promise((resolve, reject) => {
     // Execute the command using child_process
-    const command = `bunx drizzle-kit push --config=${tempConfigPath}`;
+    const command = `bun drizzle-kit push --config=${tempConfigPath}`;
 
     const proc = exec(
       command,
-      { stdio: input ? "inherit" : "pipe" },
-      (error, stdout, stderr) => {
+      { stdio: input ? "inherit" : "pipe" } as any,
+      (error: any, stdout: any, stderr: any) => {
         unlinkSync(tempConfigPath); // Clean up config file
 
         if (error) {
