@@ -1,7 +1,8 @@
 # syntax = docker/dockerfile:1
 
 # Adjust BUN_VERSION as desired
-FROM oven/bun:slim as base
+ARG BUN_VERSION=1.1.26
+FROM oven/bun:${BUN_VERSION} as base
 
 # Bun app lives here
 WORKDIR /app
